@@ -7,9 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SocketIO.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate,SocketIODelegate>{
+    SocketIO *socketIO;
+}
+@property IBOutlet NSTextField *log;
+@property IBOutlet NSButton *button;
 
-
-@end
+-(IBAction)sendMessage:(id)sender;
+@end;
 
