@@ -13,7 +13,7 @@ TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
     TimeSeriesClassificationData trainingData;
     
         //Set the dimensionality of the data (you need to do this before you can add any samples)
-        trainingData.setNumDimensions( 3 );
+        trainingData.setNumDimensions( 6 );
     
         //You can also give the dataset a name (the name should have no spaces)
         trainingData.setDatasetName("Training Data");
@@ -64,23 +64,24 @@ TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
             return EXIT_FAILURE;
         }
     
-    return trainingData;
+    return EXIT_SUCCESS;
 };
 
-int GestureRecognizer::info(TimeSeriesClassificationData* trainingData ){
+int GestureRecognizer::info(){
     
+    TimeSeriesClassificationData trainingData;
     //This can then be loaded later
-    if( !trainingData->loadDatasetFromFile( "TrainingData.txt" ) ){
+    if( !trainingData.loadDatasetFromFile( "TrainingData.txt" ) ){
         cout << "Failed to load dataset from file!\n";
         return EXIT_FAILURE;
     }
     
     //This is how you can get some stats from the training data
-    string datasetName = trainingData->getDatasetName();
-    string infoText = trainingData->getInfoText();
-    UINT numSamples = trainingData->getNumSamples();
-    UINT numDimensions = trainingData->getNumDimensions();
-    UINT numClasses = trainingData->getNumClasses();
+    string datasetName = trainingData.getDatasetName();
+    string infoText = trainingData.getInfoText();
+    UINT numSamples = trainingData.getNumSamples();
+    UINT numDimensions = trainingData.getNumDimensions();
+    UINT numClasses = trainingData.getNumClasses();
     
     cout << "Dataset Name: " << datasetName << endl;
     cout << "InfoText: " << infoText << endl;
@@ -89,7 +90,7 @@ int GestureRecognizer::info(TimeSeriesClassificationData* trainingData ){
     cout << "NumberOfClasses: " << numClasses << endl;
     
     //You can also get the minimum and maximum ranges of the data
-    vector< MinMax > ranges = trainingData->getRanges();
+    vector< MinMax > ranges = trainingData.getRanges();
     
     cout << "The ranges of the dataset are: \n";
     for(UINT j=0; j<ranges.size(); j++){
@@ -99,7 +100,7 @@ int GestureRecognizer::info(TimeSeriesClassificationData* trainingData ){
     return EXIT_SUCCESS;
 };
 
-TimeSeriesClassificationData GestureRecognizer::init(){
+int GestureRecognizer::init(){
     
     TimeSeriesClassificationData trainingData;
     
@@ -150,12 +151,6 @@ TimeSeriesClassificationData GestureRecognizer::init(){
         return EXIT_FAILURE;
     }
     
-    //Load the DTW model from a file
-    if( !dtw.loadModelFromFile("DTWModel.txt") ){
-        cout << "Failed to load the classifier model!\n";
-        return EXIT_FAILURE;
-    }
-    
     //Use the test dataset to test the DTW model
     double accuracy = 0;
     for(GRT::UINT i=0; i<testData.getNumSamples(); i++){
@@ -165,7 +160,7 @@ TimeSeriesClassificationData GestureRecognizer::init(){
         
         //Perform a prediction using the classifier
         if( !dtw.predict( timeseries ) ){
-            cout << "Failed to perform prediction for test sampel: " << i <<"\n";
+            cout << "Failed to perform prediction for test sample: " << i <<"\n";
             return EXIT_FAILURE;
         }
         
@@ -183,5 +178,28 @@ TimeSeriesClassificationData GestureRecognizer::init(){
     
     cout << "Test Accuracy: " << accuracy/double(testData.getNumSamples())*100.0 << "%" << endl;
 
-    return trainingData;
+    return EXIT_SUCCESS;
+};
+
+int GestureRecognizer::classify(TimeSeriesClassificationData gloveData){
+    
+    //Load the DTW model from a file
+    if( !dtw.loadModelFromFile("DTWModel.txt") ){
+        cout << "Failed to load the classifier model!\n";
+        return EXIT_FAILURE;
+    }
+    
+    GRT::MatrixDouble timeseries = gloveData[0].getData();
+    //Perform a prediction using the classifier
+    if( !dtw.predict( timeseries ) ){
+        cout << "Failed to perform prediction for glove sample.\n";
+        return EXIT_FAILURE;
+    }
+    //Get the predicted class label --> read dtw for get it
+    GRT::UINT predictedClassLabel = dtw.getPredictedClassLabel();
+    double maximumLikelihood = dtw.getMaximumLikelihood();
+    GRT::VectorDouble classLikelihoods = dtw.getClassLikelihoods();
+    GRT::VectorDouble classDistances = dtw.getClassDistances();
+    
+    return EXIT_SUCCESS;
 };

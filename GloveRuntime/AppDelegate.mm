@@ -28,10 +28,10 @@
 //    serialPort.connect();
     
     GestureRecognizer recognizer;
-    recognizer.init();              //initialize with training data
+    recognizer.info();              //initialize with training data
     
     [log setStringValue:@"Push the button"];
-    [self connect];
+//    [self connect];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
