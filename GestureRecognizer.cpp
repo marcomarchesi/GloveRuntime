@@ -8,77 +8,79 @@
 
 #include "GestureRecognizer.h"
 
-
-
-int GestureRecognizer::init(){
-    
+TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
     //Create a new instance of the TimeSeriesClassificationData
     TimeSeriesClassificationData trainingData;
     
-//    //Set the dimensionality of the data (you need to do this before you can add any samples)
-//    trainingData.setNumDimensions( 3 );
-//    
-//    //You can also give the dataset a name (the name should have no spaces)
-//    trainingData.setDatasetName("Training Data");
-//    
-//    //You can also add some info text about the data
-//    trainingData.setInfoText("This data contains gesture data");
-//    
-//    //Here you would record a time series, when you have finished recording the time series then add the training sample to the training data
-//    UINT gestureLabel = 1;
-//    MatrixDouble trainingSample;
-//    
-//    //For now we will just add 10 x 20 random walk data timeseries
-//    Random random;
-//    for(UINT k=0; k<10; k++){//For the number of classes
-//        gestureLabel = k+1;
-//        
-//        //Get the init random walk position for this gesture
-//        VectorDouble startPos( trainingData.getNumDimensions() );
-//        for(UINT j=0; j<startPos.size(); j++){
-//            startPos[j] = random.getRandomNumberUniform(-1.0,1.0);
-//        }
-//        
-//        //Generate the 20 time series
-//        for(UINT x=0; x<20; x++){
-//            
-//            //Clear any previous timeseries
-//            trainingSample.clear();
-//            
-//            //Generate the random walk
-//            UINT randomWalkLength = random.getRandomNumberInt(90, 110);
-//            VectorDouble sample = startPos;
-//            for(UINT i=0; i<randomWalkLength; i++){
-//                for(UINT j=0; j<startPos.size(); j++){
-//                    sample[j] += random.getRandomNumberUniform(-0.1,0.1);
-//                }
-//                
-//                //Add the sample to the training sample
-//                trainingSample.push_back( sample );
-//            }
-//            //Add the training sample to the dataset
-//            trainingData.addSample( gestureLabel, trainingSample );
-//        }
-//    }
-//    
-//    //After recording your training data you can then save it to a file
-//    if( !trainingData.saveDatasetToFile( "TrainingData.txt" ) ){
-//        cout << "Failed to save dataset to file!\n";
-//        return EXIT_FAILURE;
-//    }
+        //Set the dimensionality of the data (you need to do this before you can add any samples)
+        trainingData.setNumDimensions( 3 );
+    
+        //You can also give the dataset a name (the name should have no spaces)
+        trainingData.setDatasetName("Training Data");
+    
+        //You can also add some info text about the data
+        trainingData.setInfoText("This data contains gesture data");
+    
+        //Here you would record a time series, when you have finished recording the time series then add the training sample to the training data
+        UINT gestureLabel = 1;
+        MatrixDouble trainingSample;
+    
+        //For now we will just add 10 x 20 random walk data timeseries
+        Random random;
+        for(UINT k=0; k<10; k++){//For the number of classes
+            gestureLabel = k+1;
+    
+            //Get the init random walk position for this gesture
+            VectorDouble startPos( trainingData.getNumDimensions() );
+            for(UINT j=0; j<startPos.size(); j++){
+                startPos[j] = random.getRandomNumberUniform(-1.0,1.0);
+            }
+    
+            //Generate the 20 time series
+            for(UINT x=0; x<20; x++){
+    
+                //Clear any previous timeseries
+                trainingSample.clear();
+    
+                //Generate the random walk
+                UINT randomWalkLength = random.getRandomNumberInt(90, 110);
+                VectorDouble sample = startPos;
+                for(UINT i=0; i<randomWalkLength; i++){
+                    for(UINT j=0; j<startPos.size(); j++){
+                        sample[j] += random.getRandomNumberUniform(-0.1,0.1);
+                    }
+    
+                    //Add the sample to the training sample
+                    trainingSample.push_back( sample );
+                }
+                //Add the training sample to the dataset
+                trainingData.addSample( gestureLabel, trainingSample );
+            }
+        }
+    
+        //After recording your training data you can then save it to a file
+        if( !trainingData.saveDatasetToFile( "TrainingData.txt" ) ){
+            cout << "Failed to save dataset to file!\n";
+            return EXIT_FAILURE;
+        }
+    
+    return trainingData;
+};
+
+int GestureRecognizer::info(TimeSeriesClassificationData* trainingData ){
     
     //This can then be loaded later
-    if( !trainingData.loadDatasetFromFile( "TrainingData.txt" ) ){
+    if( !trainingData->loadDatasetFromFile( "TrainingData.txt" ) ){
         cout << "Failed to load dataset from file!\n";
         return EXIT_FAILURE;
     }
     
     //This is how you can get some stats from the training data
-    string datasetName = trainingData.getDatasetName();
-    string infoText = trainingData.getInfoText();
-    UINT numSamples = trainingData.getNumSamples();
-    UINT numDimensions = trainingData.getNumDimensions();
-    UINT numClasses = trainingData.getNumClasses();
+    string datasetName = trainingData->getDatasetName();
+    string infoText = trainingData->getInfoText();
+    UINT numSamples = trainingData->getNumSamples();
+    UINT numDimensions = trainingData->getNumDimensions();
+    UINT numClasses = trainingData->getNumClasses();
     
     cout << "Dataset Name: " << datasetName << endl;
     cout << "InfoText: " << infoText << endl;
@@ -87,13 +89,26 @@ int GestureRecognizer::init(){
     cout << "NumberOfClasses: " << numClasses << endl;
     
     //You can also get the minimum and maximum ranges of the data
-    vector< MinMax > ranges = trainingData.getRanges();
+    vector< MinMax > ranges = trainingData->getRanges();
     
     cout << "The ranges of the dataset are: \n";
     for(UINT j=0; j<ranges.size(); j++){
         cout << "Dimension: " << j << " Min: " << ranges[j].minValue << " Max: " << ranges[j].maxValue << endl;
     }
+
+    return EXIT_SUCCESS;
+};
+
+TimeSeriesClassificationData GestureRecognizer::init(){
     
+    TimeSeriesClassificationData trainingData;
+    
+    
+    //This can then be loaded later
+    if( !trainingData.loadDatasetFromFile( "TrainingData.txt" ) ){
+        cout << "Failed to load dataset from file!\n";
+        return EXIT_FAILURE;
+    }
     //If you want to partition the dataset into a training dataset and a test dataset then you can use the partition function
     //A value of 80 means that 80% of the original data will remain in the training dataset and 20% will be returned as the test dataset
     TimeSeriesClassificationData testData = trainingData.partition( 80 );
@@ -168,5 +183,5 @@ int GestureRecognizer::init(){
     
     cout << "Test Accuracy: " << accuracy/double(testData.getNumSamples())*100.0 << "%" << endl;
 
-    return 0;
+    return trainingData;
 };
