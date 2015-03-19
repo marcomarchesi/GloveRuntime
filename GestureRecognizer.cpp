@@ -8,6 +8,8 @@
 
 #include "GestureRecognizer.h"
 
+/* generate a random training set to test the gesture recognizer */
+
 TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
     //Create a new instance of the TimeSeriesClassificationData
     TimeSeriesClassificationData trainingData;
@@ -67,6 +69,8 @@ TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
     return EXIT_SUCCESS;
 };
 
+/* get some info */
+
 int GestureRecognizer::info(){
     
     TimeSeriesClassificationData trainingData;
@@ -99,6 +103,8 @@ int GestureRecognizer::info(){
 
     return EXIT_SUCCESS;
 };
+
+/* initialize the recognizer */
 
 int GestureRecognizer::init(){
     
@@ -180,6 +186,8 @@ int GestureRecognizer::init(){
 
     return EXIT_SUCCESS;
 };
+
+/* classify the data acquired from the glove controller */
 
 int GestureRecognizer::classify(TimeSeriesClassificationData gloveData){
     

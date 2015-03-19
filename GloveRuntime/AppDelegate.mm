@@ -24,11 +24,12 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
     // serial port
-//    Serial serialPort;
-//    serialPort.connect();
+    Serial serialPort;
+    serialPort.init();
+    serialPort.connect();
     
-    GestureRecognizer recognizer;
-    recognizer.info();              //initialize with training data
+//    GestureRecognizer recognizer;
+//    recognizer.info();              //initialize with training data
     
     [log setStringValue:@"Push the button"];
 //    [self connect];
@@ -40,7 +41,7 @@
 
 - (void)connect;
 {
-    // connect to the socket.io server that is running locally at port 8888
+    // connect to the socket.io server that is running locally at port 8080
     socketIO = [[SocketIO alloc] initWithDelegate:self];
     [socketIO connectToHost:@"localhost" onPort:8080];
     

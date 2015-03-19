@@ -45,14 +45,16 @@ struct Serial::packet{
     int16_t mag_z;
     int8_t chksum;
 };
-
-int Serial::connect(){
+int Serial::init(){
     
-    int glove = open(DEVICE, O_RDWR | O_NOCTTY);
+    isConnected = false;
+    
+    glove = open(DEVICE, O_RDWR | O_NOCTTY);
     /* Error Handling */
     if ( glove < 0 )
     {
         cout << "Error " << errno << " opening " << DEVICE << ": " << strerror (errno) << endl;
+        return EXIT_FAILURE;
     }
     
     /* *** Configure Port *** */
@@ -63,6 +65,7 @@ int Serial::connect(){
     if ( tcgetattr ( glove, &tty ) != 0 )
     {
         cout << "Error " << errno << " from tcgetattr: " << strerror(errno) << endl;
+        return EXIT_FAILURE;
     }
     
     /* Set Baud Rate */
@@ -92,26 +95,53 @@ int Serial::connect(){
     {
         cout << "Error " << errno << " from tcsetattr" << endl;
     }
+
+    return EXIT_SUCCESS;
+};
+
+int Serial::connect(){
     
     /* *** WRITE READ COMMAND *** */
     int n_written = (int)write( glove, READ_COMMAND, sizeof(READ_COMMAND) -1 );
     
-    cout << n_written << endl;
+    if(!n_written)
+    {
+        cout << "Error " << errno << " opening " << DEVICE << ": " << strerror (errno) << endl;
+        return EXIT_FAILURE;
+    }
+    
+    isConnected = true;
     
     /* Allocate memory for read buffer */
     char buffer [21];
     memset (&buffer, '\0', sizeof buffer);
+    
+    int buffer_index = 0;
    
-    while (1)
+    while (isConnected)
     {
-        read( glove, &buffer, 21 );
-        process_packet((Serial::packet*)buffer);
+        int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
+        cout << n << endl;
+        buffer_index += n;
+        if(buffer_index == 21){
+            process_packet((Serial::packet*)buffer);
+            buffer_index = 0;
+        }
+        
         usleep(20000);
         memset (&buffer, '\0', sizeof buffer);
         write( glove, READ_COMMAND, sizeof(READ_COMMAND) -1 );
     }
-    return 0;
+    
+    return EXIT_SUCCESS;
 };
+
+int Serial::disconnect(){
+    
+    isConnected = false;
+    return EXIT_SUCCESS;
+    
+}
 
 void Serial::process_packet(Serial::packet* p) {
     

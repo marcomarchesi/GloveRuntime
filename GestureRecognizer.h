@@ -14,8 +14,6 @@
 
 using namespace GRT;
 
-
-
 class GestureRecognizer{
     public:
         //Create a new DTW instance, using the default parameters

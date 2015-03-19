@@ -12,9 +12,13 @@
 #include <stdio.h>
 class Serial{
     public:
+    int init();
     int connect();
+    int disconnect();
     struct packet;
     private:
+    int glove;
+    bool isConnected;
     void process_packet(Serial::packet* p);
 };
 
