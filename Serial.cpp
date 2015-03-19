@@ -16,7 +16,7 @@
 #include <string.h>   // String function definitions
 #include <iostream>
 
-#define DEVICE          "/dev/cu.AmpedUp-AMP-SPP"
+#define DEVICE_PORT          "/dev/cu.AmpedUp-AMP-SPP"
 #define READ_COMMAND    "\x01\x02\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03"
 #define TERM_SPEED      "B115200"
 
@@ -45,15 +45,17 @@ struct Serial::packet{
     int16_t mag_z;
     int8_t chksum;
 };
+
+
 int Serial::init(){
     
     isConnected = false;
     
-    glove = open(DEVICE, O_RDWR | O_NOCTTY);
+    glove = open(DEVICE_PORT, O_RDWR | O_NOCTTY);
     /* Error Handling */
     if ( glove < 0 )
     {
-        cout << "Error " << errno << " opening " << DEVICE << ": " << strerror (errno) << endl;
+        cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
     }
     
@@ -106,7 +108,7 @@ int Serial::connect(){
     
     if(!n_written)
     {
-        cout << "Error " << errno << " opening " << DEVICE << ": " << strerror (errno) << endl;
+        cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
     }
     
@@ -121,14 +123,14 @@ int Serial::connect(){
     while (isConnected)
     {
         int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
-        cout << n << endl;
         buffer_index += n;
+//        cout << buffer_index << endl;
         if(buffer_index == 21){
             process_packet((Serial::packet*)buffer);
             buffer_index = 0;
         }
         
-        usleep(20000);
+        usleep(2000);
         memset (&buffer, '\0', sizeof buffer);
         write( glove, READ_COMMAND, sizeof(READ_COMMAND) -1 );
     }
@@ -144,26 +146,6 @@ int Serial::disconnect(){
 }
 
 void Serial::process_packet(Serial::packet* p) {
-    
-    
-    
-//    int8_t* buf = (int8_t*) p + 2;
-//    int8_t chksum = 0;
-//    for (unsigned int i = 0; i < 21; ++i) {  // calc. checksum
-//        
-//        chksum += buf[i];
-//    }
-//    
-//    cout << chksum << endl;
-//    
-//    if (chksum / 256 != p->chksum) {
-//        
-//        
-//        fprintf(stderr, "process_packet: packet checksum mismatch\n");
-//        
-//        return;
-//    }
-//    cout << p->acc_x << endl;
     
     float _acc_x = (p->acc_x + ACC_X_OFFSET)*G_FACTOR;
     float _acc_y = (p->acc_y + ACC_Y_OFFSET)*G_FACTOR;

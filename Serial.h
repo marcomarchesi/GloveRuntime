@@ -12,14 +12,25 @@
 #include <stdio.h>
 class Serial{
     public:
-    int init();
-    int connect();
-    int disconnect();
-    struct packet;
+        /* METHODS */
+        /* serial setup */
+        int init();
+        /* connect to acquire glove data */
+        int connect();
+        /* disconnect glove streaming */
+        int disconnect();
+    
     private:
-    int glove;
-    bool isConnected;
-    void process_packet(Serial::packet* p);
+        /* VARIABLES */
+        /* 18 bytes glove data structure */
+        struct packet;
+        /* glove serial port handler */
+        int glove;
+        /* connection status */
+        bool isConnected;
+        /* METHODS */
+        /* get complete packet of glove data */
+        void process_packet(Serial::packet* p);
 };
 
 #endif /* defined(__GloveApp__Serial__) */
