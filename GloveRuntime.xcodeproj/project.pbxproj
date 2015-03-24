@@ -7,13 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		424DC4271AB8A2C900061A69 /* SocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 424DC41D1AB8A2C900061A69 /* SocketIO.m */; };
-		424DC4281AB8A2C900061A69 /* SocketIOJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 424DC41F1AB8A2C900061A69 /* SocketIOJSONSerialization.m */; };
-		424DC4291AB8A2C900061A69 /* SocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4211AB8A2C900061A69 /* SocketIOPacket.m */; };
-		424DC42A1AB8A2C900061A69 /* SocketIOTransportWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4241AB8A2C900061A69 /* SocketIOTransportWebsocket.m */; };
-		424DC42B1AB8A2C900061A69 /* SocketIOTransportXHR.m in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4261AB8A2C900061A69 /* SocketIOTransportXHR.m */; };
-		424DC4321AB8AE6A00061A69 /* Serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4301AB8AE6A00061A69 /* Serial.cpp */; };
-		424DC4371AB8D7AD00061A69 /* GestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4351AB8D7AD00061A69 /* GestureRecognizer.cpp */; };
 		424DC5701AB8DDCB00061A69 /* AdaBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC43D1AB8DDCB00061A69 /* AdaBoost.cpp */; };
 		424DC5711AB8DDCB00061A69 /* DecisionStump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4411AB8DDCB00061A69 /* DecisionStump.cpp */; };
 		424DC5721AB8DDCB00061A69 /* RadialBasisFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC4431AB8DDCB00061A69 /* RadialBasisFunction.cpp */; };
@@ -119,7 +112,6 @@
 		424DC5D61AB8DDCB00061A69 /* TrainingLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC5691AB8DDCB00061A69 /* TrainingLog.cpp */; };
 		424DC5D71AB8DDCB00061A69 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC56C1AB8DDCB00061A69 /* Util.cpp */; };
 		424DC5D81AB8DDCB00061A69 /* WarningLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424DC56E1AB8DDCB00061A69 /* WarningLog.cpp */; };
-		424DC5DA1AB8E31E00061A69 /* TrainingData.txt in Resources */ = {isa = PBXBuildFile; fileRef = 424DC5D91AB8E31E00061A69 /* TrainingData.txt */; };
 		424DC5DB1AB8E33200061A69 /* SocketRocket.framework in Resources */ = {isa = PBXBuildFile; fileRef = 428FEF4B1AB75935008E8B25 /* SocketRocket.framework */; };
 		424DC5DC1AB8E38C00061A69 /* SocketRocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428FEF571AB7599C008E8B25 /* SocketRocket.framework */; };
 		428FEF201AB7581F008E8B25 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 428FEF1F1AB7581F008E8B25 /* AppDelegate.mm */; };
@@ -127,6 +119,13 @@
 		428FEF241AB7581F008E8B25 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 428FEF231AB7581F008E8B25 /* Images.xcassets */; };
 		428FEF271AB7581F008E8B25 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 428FEF251AB7581F008E8B25 /* MainMenu.xib */; };
 		428FEF331AB7581F008E8B25 /* GloveRuntimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 428FEF321AB7581F008E8B25 /* GloveRuntimeTests.m */; };
+		42FF5C1F1ABAF25000D4F1CF /* GestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C1B1ABAF25000D4F1CF /* GestureRecognizer.cpp */; };
+		42FF5C201ABAF25000D4F1CF /* Serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C1D1ABAF25000D4F1CF /* Serial.cpp */; };
+		42FF5C2F1ABAF25D00D4F1CF /* SocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C251ABAF25D00D4F1CF /* SocketIO.m */; };
+		42FF5C301ABAF25D00D4F1CF /* SocketIOJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C271ABAF25D00D4F1CF /* SocketIOJSONSerialization.m */; };
+		42FF5C311ABAF25D00D4F1CF /* SocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C291ABAF25D00D4F1CF /* SocketIOPacket.m */; };
+		42FF5C321ABAF25D00D4F1CF /* SocketIOTransportWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C2C1ABAF25D00D4F1CF /* SocketIOTransportWebsocket.m */; };
+		42FF5C331ABAF25D00D4F1CF /* SocketIOTransportXHR.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FF5C2E1ABAF25D00D4F1CF /* SocketIOTransportXHR.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,21 +174,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		424DC41C1AB8A2C900061A69 /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
-		424DC41D1AB8A2C900061A69 /* SocketIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIO.m; sourceTree = "<group>"; };
-		424DC41E1AB8A2C900061A69 /* SocketIOJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOJSONSerialization.h; sourceTree = "<group>"; };
-		424DC41F1AB8A2C900061A69 /* SocketIOJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOJSONSerialization.m; sourceTree = "<group>"; };
-		424DC4201AB8A2C900061A69 /* SocketIOPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOPacket.h; sourceTree = "<group>"; };
-		424DC4211AB8A2C900061A69 /* SocketIOPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOPacket.m; sourceTree = "<group>"; };
-		424DC4221AB8A2C900061A69 /* SocketIOTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransport.h; sourceTree = "<group>"; };
-		424DC4231AB8A2C900061A69 /* SocketIOTransportWebsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransportWebsocket.h; sourceTree = "<group>"; };
-		424DC4241AB8A2C900061A69 /* SocketIOTransportWebsocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOTransportWebsocket.m; sourceTree = "<group>"; };
-		424DC4251AB8A2C900061A69 /* SocketIOTransportXHR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransportXHR.h; sourceTree = "<group>"; };
-		424DC4261AB8A2C900061A69 /* SocketIOTransportXHR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOTransportXHR.m; sourceTree = "<group>"; };
-		424DC4301AB8AE6A00061A69 /* Serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Serial.cpp; sourceTree = "<group>"; };
-		424DC4311AB8AE6A00061A69 /* Serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Serial.h; sourceTree = "<group>"; };
-		424DC4351AB8D7AD00061A69 /* GestureRecognizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GestureRecognizer.cpp; sourceTree = "<group>"; };
-		424DC4361AB8D7AD00061A69 /* GestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureRecognizer.h; sourceTree = "<group>"; };
 		424DC43D1AB8DDCB00061A69 /* AdaBoost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AdaBoost.cpp; sourceTree = "<group>"; };
 		424DC43E1AB8DDCB00061A69 /* AdaBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdaBoost.h; sourceTree = "<group>"; };
 		424DC43F1AB8DDCB00061A69 /* AdaBoostClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdaBoostClassModel.h; sourceTree = "<group>"; };
@@ -440,7 +424,6 @@
 		424DC56D1AB8DDCB00061A69 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		424DC56E1AB8DDCB00061A69 /* WarningLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarningLog.cpp; sourceTree = "<group>"; };
 		424DC56F1AB8DDCB00061A69 /* WarningLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningLog.h; sourceTree = "<group>"; };
-		424DC5D91AB8E31E00061A69 /* TrainingData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TrainingData.txt; path = DerivedData/Build/Products/Debug/TrainingData.txt; sourceTree = "<group>"; };
 		428FEF191AB7581F008E8B25 /* GloveRuntime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GloveRuntime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		428FEF1D1AB7581F008E8B25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		428FEF1E1AB7581F008E8B25 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -453,6 +436,21 @@
 		428FEF321AB7581F008E8B25 /* GloveRuntimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GloveRuntimeTests.m; sourceTree = "<group>"; };
 		428FEF4B1AB75935008E8B25 /* SocketRocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketRocket.framework; path = ../SocketRocket/build/Debug/SocketRocket.framework; sourceTree = "<group>"; };
 		428FEF4D1AB7599C008E8B25 /* SocketRocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SocketRocket.xcodeproj; path = ../SocketRocket/SocketRocket.xcodeproj; sourceTree = "<group>"; };
+		42FF5C1B1ABAF25000D4F1CF /* GestureRecognizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GestureRecognizer.cpp; path = lib/GestureRecognizer.cpp; sourceTree = "<group>"; };
+		42FF5C1C1ABAF25000D4F1CF /* GestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureRecognizer.h; path = lib/GestureRecognizer.h; sourceTree = "<group>"; };
+		42FF5C1D1ABAF25000D4F1CF /* Serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serial.cpp; path = lib/Serial.cpp; sourceTree = "<group>"; };
+		42FF5C1E1ABAF25000D4F1CF /* Serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serial.h; path = lib/Serial.h; sourceTree = "<group>"; };
+		42FF5C241ABAF25D00D4F1CF /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIO.h; path = Socket.io/SocketIO.h; sourceTree = "<group>"; };
+		42FF5C251ABAF25D00D4F1CF /* SocketIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIO.m; path = Socket.io/SocketIO.m; sourceTree = "<group>"; };
+		42FF5C261ABAF25D00D4F1CF /* SocketIOJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOJSONSerialization.h; path = Socket.io/SocketIOJSONSerialization.h; sourceTree = "<group>"; };
+		42FF5C271ABAF25D00D4F1CF /* SocketIOJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOJSONSerialization.m; path = Socket.io/SocketIOJSONSerialization.m; sourceTree = "<group>"; };
+		42FF5C281ABAF25D00D4F1CF /* SocketIOPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOPacket.h; path = Socket.io/SocketIOPacket.h; sourceTree = "<group>"; };
+		42FF5C291ABAF25D00D4F1CF /* SocketIOPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOPacket.m; path = Socket.io/SocketIOPacket.m; sourceTree = "<group>"; };
+		42FF5C2A1ABAF25D00D4F1CF /* SocketIOTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransport.h; path = Socket.io/SocketIOTransport.h; sourceTree = "<group>"; };
+		42FF5C2B1ABAF25D00D4F1CF /* SocketIOTransportWebsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransportWebsocket.h; path = Socket.io/SocketIOTransportWebsocket.h; sourceTree = "<group>"; };
+		42FF5C2C1ABAF25D00D4F1CF /* SocketIOTransportWebsocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOTransportWebsocket.m; path = Socket.io/SocketIOTransportWebsocket.m; sourceTree = "<group>"; };
+		42FF5C2D1ABAF25D00D4F1CF /* SocketIOTransportXHR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransportXHR.h; path = Socket.io/SocketIOTransportXHR.h; sourceTree = "<group>"; };
+		42FF5C2E1ABAF25D00D4F1CF /* SocketIOTransportXHR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOTransportXHR.m; path = Socket.io/SocketIOTransportXHR.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,18 +475,18 @@
 		424DC41B1AB8A2A200061A69 /* Socket.io */ = {
 			isa = PBXGroup;
 			children = (
+				42FF5C241ABAF25D00D4F1CF /* SocketIO.h */,
+				42FF5C251ABAF25D00D4F1CF /* SocketIO.m */,
+				42FF5C261ABAF25D00D4F1CF /* SocketIOJSONSerialization.h */,
+				42FF5C271ABAF25D00D4F1CF /* SocketIOJSONSerialization.m */,
+				42FF5C281ABAF25D00D4F1CF /* SocketIOPacket.h */,
+				42FF5C291ABAF25D00D4F1CF /* SocketIOPacket.m */,
+				42FF5C2A1ABAF25D00D4F1CF /* SocketIOTransport.h */,
+				42FF5C2B1ABAF25D00D4F1CF /* SocketIOTransportWebsocket.h */,
+				42FF5C2C1ABAF25D00D4F1CF /* SocketIOTransportWebsocket.m */,
+				42FF5C2D1ABAF25D00D4F1CF /* SocketIOTransportXHR.h */,
+				42FF5C2E1ABAF25D00D4F1CF /* SocketIOTransportXHR.m */,
 				428FEF4D1AB7599C008E8B25 /* SocketRocket.xcodeproj */,
-				424DC41C1AB8A2C900061A69 /* SocketIO.h */,
-				424DC41D1AB8A2C900061A69 /* SocketIO.m */,
-				424DC41E1AB8A2C900061A69 /* SocketIOJSONSerialization.h */,
-				424DC41F1AB8A2C900061A69 /* SocketIOJSONSerialization.m */,
-				424DC4201AB8A2C900061A69 /* SocketIOPacket.h */,
-				424DC4211AB8A2C900061A69 /* SocketIOPacket.m */,
-				424DC4221AB8A2C900061A69 /* SocketIOTransport.h */,
-				424DC4231AB8A2C900061A69 /* SocketIOTransportWebsocket.h */,
-				424DC4241AB8A2C900061A69 /* SocketIOTransportWebsocket.m */,
-				424DC4251AB8A2C900061A69 /* SocketIOTransportXHR.h */,
-				424DC4261AB8A2C900061A69 /* SocketIOTransportXHR.m */,
 			);
 			name = Socket.io;
 			sourceTree = "<group>";
@@ -501,16 +499,15 @@
 			name = frameworks;
 			sourceTree = "<group>";
 		};
-		424DC42F1AB8AE4E00061A69 /* GloveLib */ = {
+		424DC42F1AB8AE4E00061A69 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				424DC5D91AB8E31E00061A69 /* TrainingData.txt */,
-				424DC4301AB8AE6A00061A69 /* Serial.cpp */,
-				424DC4311AB8AE6A00061A69 /* Serial.h */,
-				424DC4351AB8D7AD00061A69 /* GestureRecognizer.cpp */,
-				424DC4361AB8D7AD00061A69 /* GestureRecognizer.h */,
+				42FF5C1B1ABAF25000D4F1CF /* GestureRecognizer.cpp */,
+				42FF5C1C1ABAF25000D4F1CF /* GestureRecognizer.h */,
+				42FF5C1D1ABAF25000D4F1CF /* Serial.cpp */,
+				42FF5C1E1ABAF25000D4F1CF /* Serial.h */,
 			);
-			name = GloveLib;
+			name = lib;
 			sourceTree = "<group>";
 		};
 		424DC43A1AB8DDCB00061A69 /* GRT */ = {
@@ -1246,7 +1243,7 @@
 			isa = PBXGroup;
 			children = (
 				424DC43A1AB8DDCB00061A69 /* GRT */,
-				424DC42F1AB8AE4E00061A69 /* GloveLib */,
+				424DC42F1AB8AE4E00061A69 /* lib */,
 				424DC41B1AB8A2A200061A69 /* Socket.io */,
 				428FEF1B1AB7581F008E8B25 /* GloveRuntime */,
 				428FEF2F1AB7581F008E8B25 /* GloveRuntimeTests */,
@@ -1433,7 +1430,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				424DC5DB1AB8E33200061A69 /* SocketRocket.framework in Resources */,
-				424DC5DA1AB8E31E00061A69 /* TrainingData.txt in Resources */,
 				428FEF241AB7581F008E8B25 /* Images.xcassets in Resources */,
 				428FEF271AB7581F008E8B25 /* MainMenu.xib in Resources */,
 			);
@@ -1470,6 +1466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				424DC5901AB8DDCB00061A69 /* SelfOrganizingMap.cpp in Sources */,
+				42FF5C1F1ABAF25000D4F1CF /* GestureRecognizer.cpp in Sources */,
 				424DC5CE1AB8DDCB00061A69 /* MatrixDouble.cpp in Sources */,
 				424DC5B21AB8DDCB00061A69 /* TimeDomainFeatures.cpp in Sources */,
 				424DC59D1AB8DDCB00061A69 /* MLBase.cpp in Sources */,
@@ -1482,8 +1479,8 @@
 				424DC5D71AB8DDCB00061A69 /* Util.cpp in Sources */,
 				424DC58E1AB8DDCB00061A69 /* HierarchicalClustering.cpp in Sources */,
 				424DC5751AB8DDCB00061A69 /* ANBC_Model.cpp in Sources */,
+				42FF5C321ABAF25D00D4F1CF /* SocketIOTransportWebsocket.m in Sources */,
 				424DC58F1AB8DDCB00061A69 /* KMeans.cpp in Sources */,
-				424DC4271AB8A2C900061A69 /* SocketIO.m in Sources */,
 				424DC57C1AB8DDCB00061A69 /* DTW.cpp in Sources */,
 				424DC58D1AB8DDCB00061A69 /* GaussianMixtureModels.cpp in Sources */,
 				424DC5961AB8DDCB00061A69 /* Tree.cpp in Sources */,
@@ -1505,7 +1502,6 @@
 				424DC5981AB8DDCB00061A69 /* Clusterer.cpp in Sources */,
 				424DC5931AB8DDCB00061A69 /* MovementDetector.cpp in Sources */,
 				424DC5701AB8DDCB00061A69 /* AdaBoost.cpp in Sources */,
-				424DC4371AB8D7AD00061A69 /* GestureRecognizer.cpp in Sources */,
 				424DC5AB1AB8DDCB00061A69 /* FFTFeatures.cpp in Sources */,
 				424DC5A51AB8DDCB00061A69 /* TimeSeriesClassificationData.cpp in Sources */,
 				424DC5BA1AB8DDCB00061A69 /* DoubleMovingAverageFilter.cpp in Sources */,
@@ -1513,13 +1509,15 @@
 				424DC5951AB8DDCB00061A69 /* Node.cpp in Sources */,
 				424DC57E1AB8DDCB00061A69 /* GMM.cpp in Sources */,
 				424DC5C01AB8DDCB00061A69 /* MovingAverageFilter.cpp in Sources */,
-				424DC42B1AB8A2C900061A69 /* SocketIOTransportXHR.m in Sources */,
 				424DC5CC1AB8DDCB00061A69 /* InfoLog.cpp in Sources */,
 				424DC5B41AB8DDCB00061A69 /* ZeroCrossingCounter.cpp in Sources */,
+				42FF5C301ABAF25D00D4F1CF /* SocketIOJSONSerialization.m in Sources */,
 				424DC5C91AB8DDCB00061A69 /* DebugLog.cpp in Sources */,
 				424DC59A1AB8DDCB00061A69 /* FeatureExtraction.cpp in Sources */,
+				42FF5C2F1ABAF25D00D4F1CF /* SocketIO.m in Sources */,
 				424DC5731AB8DDCB00061A69 /* WeakClassifier.cpp in Sources */,
 				424DC5991AB8DDCB00061A69 /* Context.cpp in Sources */,
+				42FF5C311ABAF25D00D4F1CF /* SocketIOPacket.m in Sources */,
 				424DC5D21AB8DDCB00061A69 /* TestingLog.cpp in Sources */,
 				424DC5B11AB8DDCB00061A69 /* SOMQuantizer.cpp in Sources */,
 				424DC5A71AB8DDCB00061A69 /* TimeSeriesClassificationSample.cpp in Sources */,
@@ -1536,7 +1534,6 @@
 				424DC5891AB8DDCB00061A69 /* libsvm.cpp in Sources */,
 				424DC5AD1AB8DDCB00061A69 /* KMeansQuantizer.cpp in Sources */,
 				424DC5A61AB8DDCB00061A69 /* TimeSeriesClassificationDataStream.cpp in Sources */,
-				424DC4321AB8AE6A00061A69 /* Serial.cpp in Sources */,
 				424DC5B31AB8DDCB00061A69 /* TimeseriesBuffer.cpp in Sources */,
 				424DC5A31AB8DDCB00061A69 /* RegressionData.cpp in Sources */,
 				424DC5AC1AB8DDCB00061A69 /* KMeansFeatures.cpp in Sources */,
@@ -1553,14 +1550,13 @@
 				424DC5851AB8DDCB00061A69 /* MinDistModel.cpp in Sources */,
 				424DC5871AB8DDCB00061A69 /* RandomForests.cpp in Sources */,
 				424DC5C81AB8DDCB00061A69 /* Cholesky.cpp in Sources */,
-				424DC4291AB8A2C900061A69 /* SocketIOPacket.m in Sources */,
 				424DC5881AB8DDCB00061A69 /* Softmax.cpp in Sources */,
 				428FEF201AB7581F008E8B25 /* AppDelegate.mm in Sources */,
 				424DC5921AB8DDCB00061A69 /* BernoulliRBM.cpp in Sources */,
 				424DC5BC1AB8DDCB00061A69 /* HighPassFilter.cpp in Sources */,
 				424DC57D1AB8DDCB00061A69 /* FiniteStateMachine.cpp in Sources */,
+				42FF5C331ABAF25D00D4F1CF /* SocketIOTransportXHR.m in Sources */,
 				424DC5801AB8DDCB00061A69 /* DiscreteHiddenMarkovModel.cpp in Sources */,
-				424DC42A1AB8A2C900061A69 /* SocketIOTransportWebsocket.m in Sources */,
 				424DC5C61AB8DDCB00061A69 /* MultidimensionalRegression.cpp in Sources */,
 				424DC5CA1AB8DDCB00061A69 /* EigenvalueDecomposition.cpp in Sources */,
 				424DC5B71AB8DDCB00061A69 /* ClassLabelTimeoutFilter.cpp in Sources */,
@@ -1575,11 +1571,11 @@
 				424DC5B01AB8DDCB00061A69 /* RBMQuantizer.cpp in Sources */,
 				424DC5CB1AB8DDCB00061A69 /* ErrorLog.cpp in Sources */,
 				424DC58B1AB8DDCB00061A69 /* SwipeDetector.cpp in Sources */,
+				42FF5C201ABAF25000D4F1CF /* Serial.cpp in Sources */,
 				424DC5711AB8DDCB00061A69 /* DecisionStump.cpp in Sources */,
 				424DC5D01AB8DDCB00061A69 /* RangeTracker.cpp in Sources */,
 				424DC5BD1AB8DDCB00061A69 /* LeakyIntegrator.cpp in Sources */,
 				424DC5791AB8DDCB00061A69 /* DecisionTreeNode.cpp in Sources */,
-				424DC4281AB8A2C900061A69 /* SocketIOJSONSerialization.m in Sources */,
 				424DC59E1AB8DDCB00061A69 /* PostProcessing.cpp in Sources */,
 				424DC5D61AB8DDCB00061A69 /* TrainingLog.cpp in Sources */,
 				424DC57A1AB8DDCB00061A69 /* DecisionTreeThresholdNode.cpp in Sources */,

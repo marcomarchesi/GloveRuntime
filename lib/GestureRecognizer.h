@@ -19,7 +19,7 @@ class GestureRecognizer{
         //Create a new DTW instance, using the default parameters
         DTW dtw;
         int init();
-        TimeSeriesClassificationData generate_random_set();
+        TimeSeriesClassificationData generate_random_set(int dimension,int classes);
         int info();
         int train();
         int classify(TimeSeriesClassificationData gloveData);

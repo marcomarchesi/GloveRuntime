@@ -19,19 +19,53 @@
 
 @implementation AppDelegate
 @synthesize log;
-@synthesize button;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    // serial port
+    // 1) Open a serial port to get data from the glove controller
     Serial serialPort;
     serialPort.init();
-    serialPort.connect();
+    int glove = serialPort.connect();
+    Serial::glove_packet glove_data;
+    
+    /* Allocate memory for read buffer */
+    char buffer [21];
+    memset (&buffer, '\0', sizeof buffer);
+    
+    int buffer_index = 0;
+    
+    [log setStringValue:@"connected"];
+    
+    // 2) on connection
+    while (serialPort.isConnected)
+    {
+        int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
+        buffer_index += n;
+        if(buffer_index == 21){
+            glove_data = serialPort.process_packet((Serial::serial_packet*)buffer);
+            buffer_index = 0;
+        }
+        /* Objective-C part */
+        memcpy(&buffer, &glove_data, sizeof(glove_data));
+        NSString *dataString = [NSString stringWithFormat:@"%f",glove_data.acc_x];
+        NSLog(@"%@",dataString);
+        
+    // 3) send glove data by web socket
+        [socketIO sendMessage:dataString];
+        
+        usleep(2000);
+        memset (&buffer, '\0', sizeof buffer);
+        //next read command
+        serialPort.sendReadCommand();
+    }
+    
+    /* 4) Create a Gesture Recognizer to process data */
     
 //    GestureRecognizer recognizer;
-//    recognizer.info();              //initialize with training data
+//      recognizer.generate_random_set(6,4);              //generate random training set of 4 classes
+//      recognizer.init();
     
-    [log setStringValue:@"Push the button"];
+    
 //    [self connect];
 }
 
@@ -47,12 +81,6 @@
     
 }
 
--(IBAction)sendMessage:(id)sender{
-    
-    NSString *message = @"Et voilà! You pushed a button!";
-    [socketIO sendMessage:message];
-    [log setStringValue:@"Et voilà! You pushed a button!"];
-};
 
 # pragma mark -
 # pragma mark socket.IO-objc delegate methods

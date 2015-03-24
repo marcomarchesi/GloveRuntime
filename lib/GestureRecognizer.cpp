@@ -8,17 +8,20 @@
 
 #include "GestureRecognizer.h"
 
+#define TRIM_THRESHOLD 0.1
+#define TRIM_PERCENTAGE 90
+
 /* generate a random training set to test the gesture recognizer */
 
-TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
+TimeSeriesClassificationData GestureRecognizer::generate_random_set(int dimension,int classes){
     //Create a new instance of the TimeSeriesClassificationData
     TimeSeriesClassificationData trainingData;
     
         //Set the dimensionality of the data (you need to do this before you can add any samples)
-        trainingData.setNumDimensions( 6 );
+        trainingData.setNumDimensions(dimension );
     
         //You can also give the dataset a name (the name should have no spaces)
-        trainingData.setDatasetName("Training Data");
+        trainingData.setDatasetName("GloveData");
     
         //You can also add some info text about the data
         trainingData.setInfoText("This data contains gesture data");
@@ -29,7 +32,7 @@ TimeSeriesClassificationData GestureRecognizer::generate_random_set(){
     
         //For now we will just add 10 x 20 random walk data timeseries
         Random random;
-        for(UINT k=0; k<10; k++){//For the number of classes
+        for(UINT k=0; k<classes; k++){//For the number of classes
             gestureLabel = k+1;
     
             //Get the init random walk position for this gesture
@@ -109,6 +112,7 @@ int GestureRecognizer::info(){
 int GestureRecognizer::init(){
     
     TimeSeriesClassificationData trainingData;
+    dtw.enableNullRejection( true );        // to solve GESTURE SPOTTING
     
     
     //This can then be loaded later
@@ -143,7 +147,9 @@ int GestureRecognizer::init(){
 //    trainingData.clear();
     
     //Trim the training data for any sections of non-movement at the start or end of the recordings
-    dtw.enableTrimTrainingData(true,0.1,90);
+    dtw.enableTrimTrainingData(true,TRIM_THRESHOLD,TRIM_PERCENTAGE);
+    
+    
     
     //Train the classifier
     if( !dtw.train( trainingData ) ){

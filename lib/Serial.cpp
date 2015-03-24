@@ -32,21 +32,6 @@
 using namespace std;
 
 
-struct Serial::packet{
-    int16_t header;
-    int16_t acc_x;
-    int16_t acc_y;
-    int16_t acc_z;
-    int16_t gyr_x;
-    int16_t gyr_y;
-    int16_t gyr_z;
-    int16_t mag_x;
-    int16_t mag_y;
-    int16_t mag_z;
-    int8_t chksum;
-};
-
-
 int Serial::init(){
     
     isConnected = false;
@@ -101,41 +86,28 @@ int Serial::init(){
     return EXIT_SUCCESS;
 };
 
-int Serial::connect(){
+int Serial::sendReadCommand(){
     
     /* *** WRITE READ COMMAND *** */
     int n_written = (int)write( glove, READ_COMMAND, sizeof(READ_COMMAND) -1 );
     
     if(!n_written)
     {
+        isConnected = false;
         cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
+    }else{
+        isConnected = true;
+//        cout << "Glove connected" << endl;
+        return EXIT_SUCCESS;
     }
     
-    isConnected = true;
+};
+
+int Serial::connect(){
     
-    /* Allocate memory for read buffer */
-    char buffer [21];
-    memset (&buffer, '\0', sizeof buffer);
-    
-    int buffer_index = 0;
-   
-    while (isConnected)
-    {
-        int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
-        buffer_index += n;
-//        cout << buffer_index << endl;
-        if(buffer_index == 21){
-            process_packet((Serial::packet*)buffer);
-            buffer_index = 0;
-        }
-        
-        usleep(2000);
-        memset (&buffer, '\0', sizeof buffer);
-        write( glove, READ_COMMAND, sizeof(READ_COMMAND) -1 );
-    }
-    
-    return EXIT_SUCCESS;
+    sendReadCommand();
+    return glove;
 };
 
 int Serial::disconnect(){
@@ -145,19 +117,30 @@ int Serial::disconnect(){
     
 }
 
-void Serial::process_packet(Serial::packet* p) {
+Serial::glove_packet Serial::process_packet(Serial::serial_packet* p) {
     
-    float _acc_x = (p->acc_x + ACC_X_OFFSET)*G_FACTOR;
-    float _acc_y = (p->acc_y + ACC_Y_OFFSET)*G_FACTOR;
-    float _acc_z = (p->acc_z + ACC_Z_OFFSET)*G_FACTOR;
-    float _gyr_x = (p->gyr_x)/GYRO_FACTOR - GYR_X_OFFSET;
-    float _gyr_y = (p->gyr_y)/GYRO_FACTOR - GYR_Y_OFFSET;
-    float _gyr_z = (p->gyr_z)/GYRO_FACTOR - GYR_Z_OFFSET;
-    float _mag_x = p->mag_x;
-    float _mag_y = p->mag_y;
-    float _mag_z = p->mag_z;
-    
-    cout << _acc_z << endl;
 
+        float _acc_x = (p->acc_x + ACC_X_OFFSET)*G_FACTOR;
+        float _acc_y = (p->acc_y + ACC_Y_OFFSET)*G_FACTOR;
+        float _acc_z = (p->acc_z + ACC_Z_OFFSET)*G_FACTOR;
+        float _gyr_x = (p->gyr_x)/GYRO_FACTOR - GYR_X_OFFSET;
+        float _gyr_y = (p->gyr_y)/GYRO_FACTOR - GYR_Y_OFFSET;
+        float _gyr_z = (p->gyr_z)/GYRO_FACTOR - GYR_Z_OFFSET;
+        float _mag_x = p->mag_x;
+        float _mag_y = p->mag_y;
+        float _mag_z = p->mag_z;
+    
+    Serial::glove_packet packet;
+    packet.acc_x = _acc_x;
+    packet.acc_y = _acc_y;
+    packet.acc_z = _acc_z;
+    packet.gyr_x = _gyr_x;
+    packet.gyr_y = _gyr_y;
+    packet.gyr_z = _gyr_z;
+    packet.mag_x = _mag_x;
+    packet.mag_y = _mag_y;
+    packet.mag_z = _mag_z;
+    
+    return packet;
 };
 

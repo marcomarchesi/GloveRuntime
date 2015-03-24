@@ -13,8 +13,6 @@
     SocketIO *socketIO;
 }
 @property IBOutlet NSTextField *log;
-@property IBOutlet NSButton *button;
 
--(IBAction)sendMessage:(id)sender;
 @end;
 
