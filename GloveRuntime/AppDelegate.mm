@@ -36,6 +36,9 @@
     
     [log setStringValue:@"connected"];
     
+    //connect web socket
+    [self connect];
+    
     // 2) on connection
     while (serialPort.isConnected)
     {
@@ -48,10 +51,11 @@
         /* Objective-C part */
         memcpy(&buffer, &glove_data, sizeof(glove_data));
         NSString *dataString = [NSString stringWithFormat:@"%f",glove_data.acc_x];
-        NSLog(@"%@",dataString);
+//        NSLog(@"%@",dataString);
         
     // 3) send glove data by web socket
-        [socketIO sendMessage:dataString];
+        [socketIO sendMessage:@"Hello"];
+//        [socketIO sendMessage:dataString];
         
         usleep(2000);
         memset (&buffer, '\0', sizeof buffer);
@@ -66,7 +70,7 @@
 //      recognizer.init();
     
     
-//    [self connect];
+
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
