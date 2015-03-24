@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SocketIO.h"
+#include <assert.h>
+#include <pthread.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate,SocketIODelegate>{
     SocketIO *socketIO;

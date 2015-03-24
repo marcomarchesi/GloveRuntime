@@ -10,8 +10,6 @@
 #import "Serial.h"
 #import "GestureRecognizer.h"
 
-
-
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
@@ -22,46 +20,19 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    // 1) Open a serial port to get data from the glove controller
-    Serial serialPort;
-    serialPort.init();
-    int glove = serialPort.connect();
-    Serial::glove_packet glove_data;
-    
-    /* Allocate memory for read buffer */
-    char buffer [21];
-    memset (&buffer, '\0', sizeof buffer);
-    
-    int buffer_index = 0;
-    
+    //connect web socket
+    [self webSocketConnect];
     [log setStringValue:@"connected"];
     
-    //connect web socket
-    [self connect];
     
-    // 2) on connection
-    while (serialPort.isConnected)
-    {
-        int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
-        buffer_index += n;
-        if(buffer_index == 21){
-            glove_data = serialPort.process_packet((Serial::serial_packet*)buffer);
-            buffer_index = 0;
-        }
-        /* Objective-C part */
-        memcpy(&buffer, &glove_data, sizeof(glove_data));
-        NSString *dataString = [NSString stringWithFormat:@"%f",glove_data.acc_x];
-//        NSLog(@"%@",dataString);
-        
-    // 3) send glove data by web socket
-        [socketIO sendMessage:@"Hello"];
-//        [socketIO sendMessage:dataString];
-        
-        usleep(2000);
-        memset (&buffer, '\0', sizeof buffer);
-        //next read command
-        serialPort.sendReadCommand();
-    }
+    /*** Glove thread *****/
+    NSThread* gloveThread = [[NSThread alloc] initWithTarget:self
+                                                 selector:@selector(GloveThreadRoutine)
+                                                   object:nil];
+    
+    [gloveThread start];
+    
+    /**********************/
     
     /* 4) Create a Gesture Recognizer to process data */
     
@@ -77,7 +48,45 @@
     
 }
 
-- (void)connect;
+
+-(void) GloveThreadRoutine
+{
+    
+    // 1) Open a serial port to get data from the glove controller
+    Serial serialPort;
+    serialPort.init();
+    int glove = serialPort.connect();
+    Serial::glove_packet glove_data;
+    /* Allocate memory for read buffer */
+    char buffer [21];
+    memset (&buffer, '\0', sizeof buffer);
+    int buffer_index = 0;
+    
+    // 2) on connection
+    while (serialPort.isConnected)
+    {
+        int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
+        buffer_index += n;
+        if(buffer_index == 21){
+            glove_data = serialPort.process_packet((Serial::serial_packet*)buffer);
+            buffer_index = 0;
+        }
+        /* Objective-C part */
+        memcpy(&buffer, &glove_data, sizeof(glove_data));
+        NSString *dataString = [NSString stringWithFormat:@"%f",glove_data.acc_x];
+        //        NSLog(@"%@",dataString);
+        
+        // 3) send glove data by web socket
+        [socketIO sendMessage:dataString];
+        
+        usleep(2000);
+        memset (&buffer, '\0', sizeof buffer);
+        //next read command
+        serialPort.sendReadCommand();
+    }
+}
+
+- (void)webSocketConnect
 {
     // connect to the socket.io server that is running locally at port 8080
     socketIO = [[SocketIO alloc] initWithDelegate:self];
@@ -129,7 +138,6 @@
         NSLog(@"onError() %@", error);
     }
 }
-
 
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error
 {
