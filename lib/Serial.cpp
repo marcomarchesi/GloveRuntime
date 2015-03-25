@@ -16,7 +16,8 @@
 #include <string.h>   // String function definitions
 #include <iostream>
 
-#define DEVICE_PORT          "/dev/cu.AmpedUp-AMP-SPP"
+#define DEVICE_PORT     "/dev/cu.AmpedUp-AMP-SPP"
+#define USB_DEVICE_PORT "/dev/cu.usbserial-DA00RAK6"
 #define READ_COMMAND    "\x01\x02\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03"
 #define TERM_SPEED      "B115200"
 
@@ -36,11 +37,11 @@ int Serial::init(){
     
     isConnected = false;
     
-    glove = open(DEVICE_PORT, O_RDWR | O_NOCTTY);
+    glove = open(USB_DEVICE_PORT, O_RDWR | O_NOCTTY);
     /* Error Handling */
     if ( glove < 0 )
     {
-        cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
+        cout << "Error " << errno << " opening " << USB_DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
     }
     
@@ -67,10 +68,11 @@ int Serial::init(){
     tty.c_cflag     &=  ~CRTSCTS;       // no flow control
     tty.c_lflag     =   0;          // no signaling chars, no echo, no canonical processing
     tty.c_oflag     =   0;                  // no remapping, no delays
-    tty.c_cc[VMIN]      =   0;                  // read doesn't block
-    tty.c_cc[VTIME]     =   5;                  // 0.5 seconds read timeout
+    tty.c_cc[VMIN]      =   21;                  // read doesn't block
+    tty.c_cc[VTIME]     =   0;                  // 0.5 seconds read timeout
     
-    tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
+    tty.c_cflag     |=  CREAD;
+    tty.c_cflag     |=  CLOCAL;     // turn on READ & ignore ctrl lines
     tty.c_iflag     &=  ~(IXON | IXOFF | IXANY);// turn off s/w flow ctrl
     tty.c_lflag     &=  ~(ICANON | ECHO | ECHOE | ISIG); // make raw
     tty.c_oflag     &=  ~OPOST;              // make raw
@@ -120,15 +122,15 @@ int Serial::disconnect(){
 Serial::glove_packet Serial::process_packet(Serial::serial_packet* p) {
     
 
-        float _acc_x = (p->acc_x + ACC_X_OFFSET)*G_FACTOR;
-        float _acc_y = (p->acc_y + ACC_Y_OFFSET)*G_FACTOR;
-        float _acc_z = (p->acc_z + ACC_Z_OFFSET)*G_FACTOR;
-        float _gyr_x = (p->gyr_x)/GYRO_FACTOR - GYR_X_OFFSET;
-        float _gyr_y = (p->gyr_y)/GYRO_FACTOR - GYR_Y_OFFSET;
-        float _gyr_z = (p->gyr_z)/GYRO_FACTOR - GYR_Z_OFFSET;
-        float _mag_x = p->mag_x;
-        float _mag_y = p->mag_y;
-        float _mag_z = p->mag_z;
+    float _acc_x = (p->acc_x + ACC_X_OFFSET)*G_FACTOR;
+    float _acc_y = (p->acc_y + ACC_Y_OFFSET)*G_FACTOR;
+    float _acc_z = (p->acc_z + ACC_Z_OFFSET)*G_FACTOR;
+    float _gyr_x = (p->gyr_x)/GYRO_FACTOR - GYR_X_OFFSET;
+    float _gyr_y = (p->gyr_y)/GYRO_FACTOR - GYR_Y_OFFSET;
+    float _gyr_z = (p->gyr_z)/GYRO_FACTOR - GYR_Z_OFFSET;
+    float _mag_x = p->mag_x;
+    float _mag_y = p->mag_y;
+    float _mag_z = p->mag_z;
     
     Serial::glove_packet packet;
     packet.acc_x = _acc_x;

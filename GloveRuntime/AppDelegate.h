@@ -11,8 +11,10 @@
 #include <assert.h>
 #include <pthread.h>
 
+
 @interface AppDelegate : NSObject <NSApplicationDelegate,SocketIODelegate>{
     SocketIO *socketIO;
+    NSDictionary* gloveDataDictionary;
 }
 @property IBOutlet NSTextField *log;
 

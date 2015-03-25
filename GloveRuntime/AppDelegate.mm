@@ -21,8 +21,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
     //connect web socket
-    [self webSocketConnect];
+//    [self webSocketConnect];
     [log setStringValue:@"connected"];
+    
     
     
     /*** Glove thread *****/
@@ -73,13 +74,27 @@
         }
         /* Objective-C part */
         memcpy(&buffer, &glove_data, sizeof(glove_data));
-        NSString *dataString = [NSString stringWithFormat:@"%f",glove_data.acc_x];
-        //        NSLog(@"%@",dataString);
         
-        // 3) send glove data by web socket
-        [socketIO sendMessage:dataString];
+        cout << glove_data.acc_z << endl;
         
-        usleep(2000);
+        
+        NSString *acc_x = [NSString stringWithFormat:@"%f",glove_data.acc_x];
+        NSString *acc_y = [NSString stringWithFormat:@"%f",glove_data.acc_y];
+        NSString *acc_z = [NSString stringWithFormat:@"%f",glove_data.acc_z];
+        NSString *gyr_x = [NSString stringWithFormat:@"%f",glove_data.gyr_x];
+        NSString *gyr_y = [NSString stringWithFormat:@"%f",glove_data.gyr_x];
+        NSString *gyr_z = [NSString stringWithFormat:@"%f",glove_data.gyr_z];
+        gloveDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:acc_x,@"acc_x",
+                                                                         acc_y,@"acc_y",
+                                                                         acc_z,@"acc_z",
+                                                                         gyr_x,@"gyr_x",
+                                                                         gyr_y,@"gyr_y",
+                                                                         gyr_z,@"gyr_z",nil];
+        
+        // 3) send glove data by web socket]
+        [socketIO sendJSON:gloveDataDictionary];
+        
+//        usleep(2000);
         memset (&buffer, '\0', sizeof buffer);
         //next read command
         serialPort.sendReadCommand();
