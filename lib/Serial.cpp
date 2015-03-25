@@ -19,16 +19,16 @@
 #define DEVICE_PORT     "/dev/cu.AmpedUp-AMP-SPP"
 #define USB_DEVICE_PORT "/dev/cu.usbserial-DA00RAK6"
 #define READ_COMMAND    "\x01\x02\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03"
-#define TERM_SPEED      "B115200"
+#define TERM_SPEED      B115200
 
 #define G_FACTOR        0.00390625
 #define GYRO_FACTOR     14.375
 #define ACC_X_OFFSET    0
 #define ACC_Y_OFFSET    0
 #define ACC_Z_OFFSET    38.46
-#define GYR_X_OFFSET    0.626
-#define GYR_Y_OFFSET    -1.895
-#define GYR_Z_OFFSET    0
+#define GYR_X_OFFSET    -2.00
+#define GYR_Y_OFFSET    -0.9
+#define GYR_Z_OFFSET    0.13
 
 using namespace std;
 
@@ -57,8 +57,8 @@ int Serial::init(){
     }
     
     /* Set Baud Rate */
-    cfsetospeed (&tty, B115200);
-    cfsetispeed (&tty, B115200);
+    cfsetospeed (&tty, TERM_SPEED);
+    cfsetispeed (&tty, TERM_SPEED);
     
     /* Setting other Port Stuff */
     tty.c_cflag     &=  ~PARENB;        // Make 8n1
@@ -122,12 +122,12 @@ int Serial::disconnect(){
 Serial::glove_packet Serial::process_packet(Serial::serial_packet* p) {
     
 
-    float _acc_x = (p->acc_x + ACC_X_OFFSET)*G_FACTOR;
-    float _acc_y = (p->acc_y + ACC_Y_OFFSET)*G_FACTOR;
+    float _acc_x = (p->acc_y + ACC_X_OFFSET)*G_FACTOR;      //swap x,y because IMU is rotated on glove
+    float _acc_y = -(p->acc_x + ACC_Y_OFFSET)*G_FACTOR;
     float _acc_z = (p->acc_z + ACC_Z_OFFSET)*G_FACTOR;
-    float _gyr_x = (p->gyr_x)/GYRO_FACTOR - GYR_X_OFFSET;
-    float _gyr_y = (p->gyr_y)/GYRO_FACTOR - GYR_Y_OFFSET;
-    float _gyr_z = (p->gyr_z)/GYRO_FACTOR - GYR_Z_OFFSET;
+    float _gyr_x = -(p->gyr_y/GYRO_FACTOR) + GYR_X_OFFSET;  //swap x,y because IMU is rotated on glove
+    float _gyr_y = (p->gyr_x/GYRO_FACTOR) + GYR_Y_OFFSET;
+    float _gyr_z = (p->gyr_z/GYRO_FACTOR) + GYR_Z_OFFSET;
     float _mag_x = p->mag_x;
     float _mag_y = p->mag_y;
     float _mag_z = p->mag_z;
