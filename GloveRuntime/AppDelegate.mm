@@ -18,13 +18,15 @@
 
 @implementation AppDelegate
 @synthesize log;
+@synthesize connectButton;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
     //connect web socket
-//    [self webSocketConnect];
-    [log setStringValue:@"connected"];
-    
+//    [self webSocketConnect]; // NOW WITH A BUTTON
+
+    [connectButton setTitle:@"Connect"];
+    isConnected = NO;
     
     
     /*** Glove thread *****/
@@ -76,7 +78,7 @@
         /* Objective-C part */
         memcpy(&buffer, &glove_data, sizeof(glove_data));
         
-        cout << glove_data.acc_z << endl;
+//        cout << glove_data.acc_z << endl;
         
         NSString *roll = [NSString stringWithFormat:@"%f", Math::getRoll(&glove_data)];
         NSString *pitch = [NSString stringWithFormat:@"%f",Math::getPitch(&glove_data)];
@@ -109,11 +111,24 @@
     }
 }
 
-- (void)webSocketConnect
+-(IBAction)WebSocketConnect:(id)sender
 {
-    // connect to the socket.io server that is running locally at port 8080
-    socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:@"localhost" onPort:8080];
+    if(isConnected == NO){
+        // connect to the socket.io server that is running locally at port 8080
+        socketIO = [[SocketIO alloc] initWithDelegate:self];
+        [socketIO connectToHost:@"localhost" onPort:8080];
+        
+        [log setTextColor:[NSColor greenColor]];
+        [log setStringValue:@"connected to port 8080"];
+        [connectButton setTitle:@"Disconnect"];
+        isConnected = YES;
+    }else{
+        [socketIO disconnect];
+        [log setTextColor:[NSColor redColor]];
+        [log setStringValue:@"disconnected from port 8080"];
+        [connectButton setTitle:@"Connect"];
+        isConnected = NO;
+    }
     
 }
 
@@ -160,11 +175,15 @@
     } else {
         NSLog(@"onError() %@", error);
     }
+    [log setTextColor:[NSColor redColor]];
+    [log setStringValue:(NSString*)error];
 }
 
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error
 {
     NSLog(@"socket.io disconnected. did error occur? %@", error);
+    [log setTextColor:[NSColor redColor]];
+    [log setStringValue:@"disconnected from port 8080"];
 }
 
 

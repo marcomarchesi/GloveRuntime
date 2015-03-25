@@ -15,8 +15,11 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate,SocketIODelegate>{
     SocketIO *socketIO;
     NSDictionary* gloveDataDictionary;
+    BOOL isConnected;
 }
 @property IBOutlet NSTextField *log;
+@property IBOutlet NSButton *connectButton;
 
+-(IBAction)WebSocketConnect:(id)sender;
 @end;
 
