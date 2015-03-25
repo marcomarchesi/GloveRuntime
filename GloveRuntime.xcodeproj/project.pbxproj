@@ -174,6 +174,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4236D8631AC33FD300E7E171 /* Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Math.h; path = lib/Math.h; sourceTree = "<group>"; };
 		424DC43D1AB8DDCB00061A69 /* AdaBoost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AdaBoost.cpp; sourceTree = "<group>"; };
 		424DC43E1AB8DDCB00061A69 /* AdaBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdaBoost.h; sourceTree = "<group>"; };
 		424DC43F1AB8DDCB00061A69 /* AdaBoostClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdaBoostClassModel.h; sourceTree = "<group>"; };
@@ -506,6 +507,7 @@
 				42FF5C1C1ABAF25000D4F1CF /* GestureRecognizer.h */,
 				42FF5C1D1ABAF25000D4F1CF /* Serial.cpp */,
 				42FF5C1E1ABAF25000D4F1CF /* Serial.h */,
+				4236D8631AC33FD300E7E171 /* Math.h */,
 			);
 			name = lib;
 			sourceTree = "<group>";

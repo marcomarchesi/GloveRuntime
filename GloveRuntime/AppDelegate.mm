@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Serial.h"
+#import "Math.h"
 #import "GestureRecognizer.h"
 
 @interface AppDelegate ()
@@ -77,19 +78,26 @@
         
         cout << glove_data.acc_z << endl;
         
+        NSString *roll = [NSString stringWithFormat:@"%f", Math::getRoll(&glove_data)];
+        NSString *pitch = [NSString stringWithFormat:@"%f",Math::getPitch(&glove_data)];
+        NSString *yaw = [NSString stringWithFormat:@"%f",Math::getYaw(&glove_data)];
         
-        NSString *acc_x = [NSString stringWithFormat:@"%f",glove_data.acc_x];
-        NSString *acc_y = [NSString stringWithFormat:@"%f",glove_data.acc_y];
-        NSString *acc_z = [NSString stringWithFormat:@"%f",glove_data.acc_z];
-        NSString *gyr_x = [NSString stringWithFormat:@"%f",glove_data.gyr_x];
-        NSString *gyr_y = [NSString stringWithFormat:@"%f",glove_data.gyr_x];
-        NSString *gyr_z = [NSString stringWithFormat:@"%f",glove_data.gyr_z];
-        gloveDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:acc_x,@"acc_x",
-                                                                         acc_y,@"acc_y",
-                                                                         acc_z,@"acc_z",
-                                                                         gyr_x,@"gyr_x",
-                                                                         gyr_y,@"gyr_y",
-                                                                         gyr_z,@"gyr_z",nil];
+//        NSString *acc_x = [NSString stringWithFormat:@"%f",glove_data.acc_x];
+//        NSString *acc_y = [NSString stringWithFormat:@"%f",glove_data.acc_y];
+//        NSString *acc_z = [NSString stringWithFormat:@"%f",glove_data.acc_z];
+//        NSString *gyr_x = [NSString stringWithFormat:@"%f",glove_data.gyr_x];
+//        NSString *gyr_y = [NSString stringWithFormat:@"%f",glove_data.gyr_x];
+//        NSString *gyr_z = [NSString stringWithFormat:@"%f",glove_data.gyr_z];
+//        gloveDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:acc_x,@"acc_x",
+//                                                                         acc_y,@"acc_y",
+//                                                                         acc_z,@"acc_z",
+//                                                                         gyr_x,@"gyr_x",
+//                                                                         gyr_y,@"gyr_y",
+//                                                                         gyr_z,@"gyr_z",nil];
+        
+        gloveDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:roll,@"roll",
+                                                                         pitch,@"pitch",
+                                                                         yaw,@"yaw",nil];
         
         // 3) send glove data by web socket]
         [socketIO sendJSON:gloveDataDictionary];
