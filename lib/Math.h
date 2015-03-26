@@ -15,6 +15,7 @@
 
 namespace Math {
     
+    static bool isCalibrating = false;
     static float yaw_start = 0;
     static float yaw_calibration_array [3];
     static int yaw_calibration_counter = 0;
@@ -28,15 +29,7 @@ namespace Math {
     float getPitch(Serial::glove_packet* data){
         return atan(data->acc_x / data->acc_z);
     };
-    /* TODO */
-    float getYaw(Serial::glove_packet* data){
-        if(yaw_start ==0)
-            yaw_start = data->mag_x;
-        return data->mag_x - yaw_start;
-    };
-    float degreesToRadians(float degree){
-        return degree*(M_PI/180);
-    };
+    /* get HEADING */
     float getHeading(Serial::glove_packet* data){
         float heading = atan2(data->mag_y, data->mag_x);
         
@@ -44,9 +37,44 @@ namespace Math {
         if(heading < 0) heading += 2*M_PI;
         if(heading > 2*M_PI) heading -= 2*M_PI;
         
-//        return degreesToRadians(heading); //radians to degrees
+        //        return degreesToRadians(heading); //radians to degrees
         return heading;
     };
+    float average(float *array){
+        
+        float avg = 0;
+        for(int i=0;i<3;++i){
+            avg += array[i];
+        }
+        avg /= 3;
+        return avg;
+    };
+    float calibrate(Serial::glove_packet* data){
+        if(yaw_calibration_counter < 3){
+            yaw_calibration_array[yaw_calibration_counter] = getHeading(data);
+            yaw_calibration_counter++;
+        }else{
+            yaw_start = average(yaw_calibration_array);
+            yaw_calibration_counter = 0;
+            isCalibrating = false;
+        }
+        return yaw_start;
+    };
+    
+    /* TODO */
+    float getYaw(Serial::glove_packet* data){
+        
+//        std::cout << "heading is " << getHeading(data) << " and yaw start is " << yaw_start << std::endl;
+        float yaw = getHeading(data) - yaw_start;
+            if(yaw>0)
+                yaw *= 2;
+            return yaw;
+    };
+    
+    float degreesToRadians(float degree){
+        return degree*(M_PI/180);
+    };
+    
     
 }
 

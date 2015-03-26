@@ -80,9 +80,14 @@
             
             memcpy(&buffer, &glove_data, sizeof(glove_data));
             
+            
+            /* YAW CALIBRATION WITH MAGNETOMETER */
+            if(Math::isCalibrating)
+                Math::calibrate(&glove_data);
+            
         //        cout << "x " << glove_data.mag_x << " y " << glove_data.mag_y << " z " << glove_data.mag_z << endl;
-            cout << Math::getHeading(&glove_data) << endl;
-//            cout << Math::getYaw(&glove_data) << endl;
+//            cout << Math::getHeading(&glove_data) << endl;
+            cout << Math::getYaw(&glove_data) << endl;
         
         /* Objective-C part */
         
@@ -140,6 +145,10 @@
         isConnected = NO;
     }
     
+}
+-(IBAction)calibrateGlove:(id)sender
+{
+    Math::isCalibrating = true;
 }
 
 
