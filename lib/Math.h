@@ -36,8 +36,6 @@ namespace Math {
         // Correct for when signs are reversed.
         if(heading < 0) heading += 2*M_PI;
         if(heading > 2*M_PI) heading -= 2*M_PI;
-        
-        //        return degreesToRadians(heading); //radians to degrees
         return heading;
     };
     float average(float *array){
@@ -63,9 +61,8 @@ namespace Math {
     
     /* TODO */
     float getYaw(Serial::glove_packet* data){
-        
-//        std::cout << "heading is " << getHeading(data) << " and yaw start is " << yaw_start << std::endl;
         float yaw = getHeading(data) - yaw_start;
+        std::cout << yaw << std::endl;
             if(yaw>0)
                 yaw *= 2;
             return yaw;
