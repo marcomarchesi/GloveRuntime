@@ -56,29 +56,35 @@
 -(void) GloveThreadRoutine
 {
     
-    // 1) Open a serial port to get data from the glove controller
-    Serial serialPort;
-    serialPort.init();
-    int glove = serialPort.connect();
-    Serial::glove_packet glove_data;
-    /* Allocate memory for read buffer */
-    char buffer [21];
-    memset (&buffer, '\0', sizeof buffer);
-    int buffer_index = 0;
+        /* C++ part     */
     
-    // 2) on connection
-    while (serialPort.isConnected)
-    {
-        int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
-        buffer_index += n;
-        if(buffer_index == 21){
-            glove_data = serialPort.process_packet((Serial::serial_packet*)buffer);
-            buffer_index = 0;
-        }
-        /* Objective-C part */
-        memcpy(&buffer, &glove_data, sizeof(glove_data));
+        // 1) Open a serial port to get data from the glove controller
+        Serial serialPort;
+        serialPort.init();
+        int glove = serialPort.connect();
+        Serial::glove_packet glove_data;
+        /* Allocate memory for read buffer */
+        char buffer [21];
+        memset (&buffer, '\0', sizeof buffer);
+        int buffer_index = 0;
         
-//        cout << glove_data.acc_z << endl;
+        // 2) on connection
+        while (serialPort.isConnected)
+        {
+            int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
+            buffer_index += n;
+            if(buffer_index == 21){
+                glove_data = serialPort.process_packet((Serial::serial_packet*)buffer);
+                buffer_index = 0;
+            }
+            
+            memcpy(&buffer, &glove_data, sizeof(glove_data));
+            
+        //        cout << "x " << glove_data.mag_x << " y " << glove_data.mag_y << " z " << glove_data.mag_z << endl;
+            cout << Math::getHeading(&glove_data) << endl;
+//            cout << Math::getYaw(&glove_data) << endl;
+        
+        /* Objective-C part */
         
         NSString *roll = [NSString stringWithFormat:@"%f", Math::getRoll(&glove_data)];
         NSString *pitch = [NSString stringWithFormat:@"%f",Math::getPitch(&glove_data)];
@@ -103,8 +109,12 @@
         
         // 3) send glove data by web socket]
         [socketIO sendJSON:gloveDataDictionary];
+            
+        /**********************/
+            
+        /* C++ */
         
-//        usleep(2000);
+        // usleep(2000);
         memset (&buffer, '\0', sizeof buffer);
         //next read command
         serialPort.sendReadCommand();
@@ -184,6 +194,8 @@
     NSLog(@"socket.io disconnected. did error occur? %@", error);
     [log setTextColor:[NSColor redColor]];
     [log setStringValue:@"disconnected from port 8080"];
+    [connectButton setTitle:@"Connect"];
+    isConnected = NO;
 }
 
 

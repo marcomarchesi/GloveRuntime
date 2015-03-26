@@ -29,6 +29,12 @@
 #define GYR_X_OFFSET    -2.00
 #define GYR_Y_OFFSET    -0.9
 #define GYR_Z_OFFSET    0.13
+#define COM_X_OFFSET    27.5
+#define COM_Y_OFFSET    38
+#define COM_Z_OFFSET    -25
+#define COM_X_SCALE     0.97
+#define COM_Y_SCALE     0.97
+#define COM_Z_SCALE     1.05
 
  
 using namespace std;
@@ -38,11 +44,11 @@ int Serial::init(){
     
     isConnected = false;
     
-    glove = open(USB_DEVICE_PORT, O_RDWR | O_NOCTTY);
+    glove = open(DEVICE_PORT, O_RDWR | O_NOCTTY);
     /* Error Handling */
     if ( glove < 0 )
     {
-        cout << "Error " << errno << " opening " << USB_DEVICE_PORT << ": " << strerror (errno) << endl;
+        cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
     }
     
@@ -129,6 +135,9 @@ Serial::glove_packet Serial::process_packet(Serial::serial_packet* p) {
     float _gyr_x = -(p->gyr_y/GYRO_FACTOR) + GYR_X_OFFSET;  //swap x,y because IMU is rotated on glove
     float _gyr_y = (p->gyr_x/GYRO_FACTOR) + GYR_Y_OFFSET;
     float _gyr_z = (p->gyr_z/GYRO_FACTOR) + GYR_Z_OFFSET;
+//    float _mag_x = COM_X_SCALE * (p->mag_x - COM_X_OFFSET);
+//    float _mag_y = COM_Y_SCALE * (p->mag_y - COM_Y_OFFSET);
+//    float _mag_z = COM_Z_SCALE * (p->mag_z - COM_Z_OFFSET);
     float _mag_x = p->mag_x;
     float _mag_y = p->mag_y;
     float _mag_z = p->mag_z;
