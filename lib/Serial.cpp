@@ -16,25 +16,24 @@
 #include <string.h>   // String function definitions
 #include <iostream>
 
-#define DEVICE_PORT     "/dev/cu.AmpedUp-AMP-SPP"
+#define BT_DEVICE_PORT     "/dev/cu.AmpedUp-AMP-SPP"
 #define USB_DEVICE_PORT "/dev/cu.usbserial-DA00RAK6"
-#define READ_COMMAND    "\x01\x02\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03"
+#define START_COMMAND   "\x01\x02\x01\x03"
+#define STOP_COMMAND    "\x01\x02\x00\x03"
 #define TERM_SPEED      B115200
 
 #define G_FACTOR        0.00390625
 #define GYRO_FACTOR     14.375
-#define ACC_X_OFFSET    0
-#define ACC_Y_OFFSET    0
+#define ACC_X_OFFSET    -17.948
+#define ACC_Y_OFFSET    -12.820
 #define ACC_Z_OFFSET    38.46
-#define GYR_X_OFFSET    -2.00
-#define GYR_Y_OFFSET    -0.9
-#define GYR_Z_OFFSET    0.13
-#define COM_X_OFFSET    27.5
-#define COM_Y_OFFSET    38
-#define COM_Z_OFFSET    -25
-#define COM_X_SCALE     0.97
-#define COM_Y_SCALE     0.97
-#define COM_Z_SCALE     1.05
+#define GYR_X_OFFSET    -0.63
+#define GYR_Y_OFFSET    1.81
+#define GYR_Z_OFFSET    0.07
+#define COM_X_OFFSET    24.575
+#define COM_Y_OFFSET    -39.663
+#define COM_X_SCALE     0.983
+#define COM_Y_SCALE     1.017
 
  
 using namespace std;
@@ -44,11 +43,11 @@ int Serial::init(){
     
     isConnected = false;
     
-    glove = open(DEVICE_PORT, O_RDWR | O_NOCTTY);
+    glove = open(BT_DEVICE_PORT, O_RDWR | O_NOCTTY);
     /* Error Handling */
     if ( glove < 0 )
     {
-        cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
+        cout << "Error " << errno << " opening " << BT_DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
     }
     
@@ -95,36 +94,41 @@ int Serial::init(){
     return EXIT_SUCCESS;
 };
 
-int Serial::sendReadCommand(){
+
+int Serial::connect(){
     
     /* *** WRITE READ COMMAND *** */
-    int n_written = (int)write( glove, READ_COMMAND, sizeof(READ_COMMAND) -1 );
+    int n_written = (int)write( glove, START_COMMAND, sizeof(START_COMMAND) -1 );
     
     if(!n_written)
     {
         isConnected = false;
-        cout << "Error " << errno << " opening " << DEVICE_PORT << ": " << strerror (errno) << endl;
+        cout << "Error " << errno << " opening " << BT_DEVICE_PORT << ": " << strerror (errno) << endl;
         return EXIT_FAILURE;
     }else{
         isConnected = true;
-//        cout << "Glove connected" << endl;
-        return EXIT_SUCCESS;
+        //        cout << "Glove connected" << endl;
+        return glove;
     }
-    
-};
 
-int Serial::connect(){
-    
-    sendReadCommand();
-    return glove;
 };
 
 int Serial::disconnect(){
     
-    isConnected = false;
-    return EXIT_SUCCESS;
+    /* *** WRITE READ COMMAND *** */
+    int n_written = (int)write( glove, STOP_COMMAND, sizeof(STOP_COMMAND) -1 );
     
-}
+    if(!n_written)
+    {
+        isConnected = true;
+        cout << "Error " << errno << " opening " << BT_DEVICE_PORT << ": " << strerror (errno) << endl;
+        return EXIT_FAILURE;
+    }else{
+        isConnected = false;
+        return EXIT_SUCCESS;;
+    }
+    
+};
 
 Serial::glove_packet Serial::process_packet(Serial::serial_packet* p) {
     
@@ -135,12 +139,10 @@ Serial::glove_packet Serial::process_packet(Serial::serial_packet* p) {
     float _gyr_x = -(p->gyr_y/GYRO_FACTOR) + GYR_X_OFFSET;  //swap x,y because IMU is rotated on glove
     float _gyr_y = (p->gyr_x/GYRO_FACTOR) + GYR_Y_OFFSET;
     float _gyr_z = (p->gyr_z/GYRO_FACTOR) + GYR_Z_OFFSET;
-//    float _mag_x = COM_X_SCALE * (p->mag_x - COM_X_OFFSET);
-//    float _mag_y = COM_Y_SCALE * (p->mag_y - COM_Y_OFFSET);
-//    float _mag_z = COM_Z_SCALE * (p->mag_z - COM_Z_OFFSET);
-    float _mag_x = p->mag_x;
-    float _mag_y = p->mag_y;
+    float _mag_x = COM_X_SCALE * p->mag_x + COM_X_OFFSET;
+    float _mag_y = COM_Y_SCALE * p->mag_y + COM_Y_OFFSET;
     float _mag_z = p->mag_z;
+
     
     Serial::glove_packet packet;
     packet.acc_x = _acc_x;

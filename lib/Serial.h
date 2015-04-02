@@ -44,8 +44,6 @@ class Serial{
         };
         /* serial setup */
         int init();
-        /* write the READ_COMMAND */
-        int sendReadCommand();
         /* connect to acquire glove data */
         int connect();
         /* get complete packet of glove data */
