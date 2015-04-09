@@ -13,7 +13,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
-                <outlet property="calibrateButton" destination="5qE-TH-43O" id="acw-ks-E0f"/>
                 <outlet property="connectButton" destination="Dm7-E7-lf2" id="R2t-zl-Q3Y"/>
                 <outlet property="log" destination="9d8-Cj-lEx" id="fId-OS-bjE"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -698,16 +697,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="WebSocketConnect:" target="Voe-Tx-rLC" id="WkV-rZ-KwZ"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5qE-TH-43O">
-                        <rect key="frame" x="124" y="38" width="110" height="32"/>
-                        <buttonCell key="cell" type="push" title="Calibrate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HyU-eb-KLV">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="calibrateGlove:" target="Voe-Tx-rLC" id="n3e-uB-r9N"/>
                         </connections>
                     </button>
                 </subviews>

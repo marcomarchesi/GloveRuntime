@@ -146,8 +146,8 @@ int GestureRecognizer::init(){
     //If need you can clear any training data that you have recorded
 //    trainingData.clear();
     
-    //Trim the training data for any sections of non-movement at the start or end of the recordings
-    dtw.enableTrimTrainingData(true,TRIM_THRESHOLD,TRIM_PERCENTAGE);
+//    //Trim the training data for any sections of non-movement at the start or end of the recordings
+//    dtw.enableTrimTrainingData(true,TRIM_THRESHOLD,TRIM_PERCENTAGE);
     
     
     

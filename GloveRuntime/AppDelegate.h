@@ -19,10 +19,8 @@
 }
 @property IBOutlet NSTextField *log;
 @property IBOutlet NSButton *connectButton;
-@property IBOutlet NSButton *calibrateButton;
 
 -(IBAction)WebSocketConnect:(id)sender;
--(IBAction)calibrateGlove:(id)sender;
 
 @end;
 

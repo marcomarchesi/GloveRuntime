@@ -40,10 +40,10 @@
     
     /* 4) Create a Gesture Recognizer to process data */
     
-//    GestureRecognizer recognizer;
-//      recognizer.generate_random_set(6,4);              //generate random training set of 4 classes
-//      recognizer.init();
-    
+    GestureRecognizer recognizer;
+//    recognizer.generate_random_set(6,2);              //generate random training set of 4 classes
+      recognizer.init();
+      recognizer.info();
     
 
 }
@@ -72,7 +72,6 @@
         while (serialPort.isConnected)
         {
             int n = (int)read( glove, &buffer[buffer_index], sizeof(buffer)-buffer_index);
-          //cout << n << endl;
             buffer_index += n;
             if(buffer_index == 21){
                 glove_data = serialPort.process_packet((Serial::serial_packet*)buffer);
@@ -81,15 +80,8 @@
             
             memcpy(&buffer, &glove_data, sizeof(glove_data));
             
-            
-//            /* YAW CALIBRATION WITH MAGNETOMETER */
-            if(Math::isCalibrating)
-                Math::calibrate(&glove_data);
-            
-        //        cout << "x " << glove_data.mag_x << " y " << glove_data.mag_y << " z " << glove_data.mag_z << endl;
-//            cout << Math::getHeading(&glove_data) << endl;
-//            cout << Math::getYaw(&glove_data) << endl;
-//            Math::getPush(&glove_data);
+            Math::getRoll(&glove_data);
+
         
         /* Objective-C part */
         
@@ -121,10 +113,8 @@
             
         /* C++ */
         
-//        usleep(20);
         memset (&buffer, '\0', sizeof buffer);
-        //next read command
-//            serialPort.sendReadCommand();
+
     }
 }
 
@@ -148,11 +138,6 @@
     }
     
 }
--(IBAction)calibrateGlove:(id)sender
-{
-    Math::isCalibrating = true;
-}
-
 
 # pragma mark -
 # pragma mark socket.IO-objc delegate methods
